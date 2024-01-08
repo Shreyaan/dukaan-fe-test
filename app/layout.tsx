@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "../components/navbar/Navbar";
-import { Header } from "../components/Header";
+import { Header } from "../components/header/Header";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -19,10 +19,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(inter.className,"flex")}>
-          <Navbar></Navbar>
-        <main className="shrink-0">
-        <Header></Header>
+      <body className={cn(inter.className, "flex min-h-screen")}>
+        <Navbar></Navbar>
+        <main className="shrink-0 grow">
+          <Header></Header>
           {children}
         </main>
       </body>
