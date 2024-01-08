@@ -4,7 +4,7 @@ import { Search } from "./Search";
 import { icons } from "../icons";
 export function Header() {
   return (
-    <header className="w-full bg-white px-8 py-4 flex gap-4 border-b border-gray-300 overflow-hidden">
+    <header className="w-full bg-white px-8 py-4 flex gap-4 border-b border-gray-300 overflow-hidden z-50 top-0 sticky">
       <PageName />
       <Search />
       <div className="w-1/3 ">

@@ -19,9 +19,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "flex min-h-screen")}>
+      <body className={cn(inter.className, "flex max-h-screen")}>
         <Navbar></Navbar>
-        <main className="shrink-0 grow">
+        <main className="shrink-0 grow max-h-screen overflow-scroll">
           <Header></Header>
           {children}
         </main>
