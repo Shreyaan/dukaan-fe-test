@@ -1,9 +1,5 @@
-import Image from 'next/image'
+import Image from "next/image";
 
-export default function Home() {
-  return (
- <main>
-  edsasa
- </main>
-  )
+export default async function Home() {
+  return <div className="">overview</div>;
 }

@@ -4,7 +4,7 @@
  
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background:var(--Black-98, #FAFAFA);
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -68,9 +68,9 @@
  
 @layer base {
   * {
-    @apply shborder-border;
+    @apply border-border;
   }
   body {
-    @apply shbg-background shtext-foreground;
+    @apply bg-background text-foreground;
   }
 }
