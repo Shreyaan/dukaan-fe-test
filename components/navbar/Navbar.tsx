@@ -13,7 +13,7 @@ export let compnayData = {
 
 export function Navbar() {
   return (
-    <nav className="shrink-0 flex flex-col justify-between bg-[#1E2640] text-white h-screen w-56 px-2.5 py-4">
+    <nav className="shrink-0 flex flex-col justify-between bg-[#1E2640] text-white min-h-screen w-56 px-2.5 py-4">
       <div className="">
         <CompanyInfo />
         <NavItems />
