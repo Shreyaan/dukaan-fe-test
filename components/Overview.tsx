@@ -33,10 +33,10 @@ function Heading() {
         <DropdownMenu>
           <DropdownMenuTrigger>
             {" "}
-            <div className="text-gray-700 flex gap-2 py-1.5 px-3.5 text-base font-normal leading-6 rounded-md border border-gray-300 bg-white">
+            <div className="text-gray-700 flex gap-2 py-1.5 px-3.5 text-base font-normal leading-6 rounded-md border border-gray-300 bg-white content-center items-center">
               <p>Last Month</p>
               <div className="w-4 h-4">
-                <icons.downArrow fill="#4D4D4D" />
+                <icons.downArrow fill="#4D4D4D" width={16} height={16}/>
               </div>
             </div>
           </DropdownMenuTrigger>
@@ -59,7 +59,7 @@ interface DashboardCardProps {
 }
 
 const DashboardCard: React.FC<DashboardCardProps> = ({ title, value }) => (
-  <div className="w-1/2 bg-white p-5">
+  <div className="w-1/2 bg-white p-5 shadow-[0px_2px_6px_0px_rgba(26,24,30,0.04)]">
     <div className="flex flex-col gap-4 justify-between">
       <p className="text-[#4D4D4D] text-base not-italic font-normal leading-6">
         {title}

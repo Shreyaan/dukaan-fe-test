@@ -35,7 +35,7 @@ export function CompanyInfo() {
       <div className=""> </div>
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <icons.downArrow />
+          <icons.downArrow height={20} width={20}/>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
