@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react"
  import Link from "next/link"
 
 import { cn } from "@/lib/utils"
-import { ButtonProps, buttonVariants } from "@/components/ui/button"
+import { Button, ButtonProps, buttonVariants } from "@/components/ui/button"
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
@@ -35,18 +35,18 @@ const PaginationItem = React.forwardRef<
 ))
 PaginationItem.displayName = "PaginationItem"
 
-type PaginationLinkProps = {
+type PaginationBtnProps = {
   isActive?: boolean
-} & Pick<ButtonProps, "size"> & React.ComponentProps<typeof Link>
+} & Pick<ButtonProps, "size"> & React.ComponentProps<typeof Button>
 
-const PaginationLink = ({
+const PaginationBtn = ({
   className,
   isActive,
   size = "icon",
   ...props
-}: PaginationLinkProps) => (
+}: PaginationBtnProps) => (
   <PaginationItem>
-    <Link
+    <Button
       aria-current={isActive ? "page" : undefined}
       className={cn(
         buttonVariants({
@@ -59,13 +59,13 @@ const PaginationLink = ({
     />
   </PaginationItem>
 )
-PaginationLink.displayName = "PaginationLink"
+PaginationBtn.displayName = "PaginationBtn"
 
 const PaginationPrevious = ({
   className,
   ...props
-}: React.ComponentProps<typeof PaginationLink>) => (
-  <PaginationLink
+}: React.ComponentProps<typeof PaginationBtn>) => (
+  <PaginationBtn
     aria-label="Go to previous page"
     size="default"
     className={cn("gap-1 pl-2.5", className)}
@@ -73,15 +73,15 @@ const PaginationPrevious = ({
   >
     <ChevronLeft className="h-4 w-4" />
     <span>Previous</span>
-  </PaginationLink>
+  </PaginationBtn>
 )
 PaginationPrevious.displayName = "PaginationPrevious"
 
 const PaginationNext = ({
   className,
   ...props
-}: React.ComponentProps<typeof PaginationLink>) => (
-  <PaginationLink
+}: React.ComponentProps<typeof PaginationBtn>) => (
+  <PaginationBtn
     aria-label="Go to next page"
     size="default"
     className={cn("gap-1 pr-2.5", className)}
@@ -89,7 +89,7 @@ const PaginationNext = ({
   >
     <span>Next</span>
     <ChevronRight className="h-4 w-4" />
-  </PaginationLink>
+  </PaginationBtn>
 )
 
 const PaginationEllipsis = ({
@@ -111,7 +111,7 @@ export {
   PaginationContent,
   PaginationEllipsis,
   PaginationItem,
-  PaginationLink,
+  PaginationBtn,
   PaginationNext,
   PaginationPrevious,
 }

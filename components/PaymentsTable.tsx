@@ -12,7 +12,7 @@ import {
   PaginationContent,
   PaginationPrevious,
   PaginationEllipsis,
-  PaginationLink,
+  PaginationBtn,
   PaginationNext,
 } from "@/components/ui/pagination";
 import { cn } from "@/lib/utils";
@@ -94,28 +94,24 @@ export function PaymentsTable() {
         <div className="mt-6">
           <Pagination>
             <PaginationContent>
-              <PaginationPrevious
-                className="mr-6 text-gray-700 flex p-3 rounded-md border border-gray-300 bg-white items-center"
-                href="#"
-              />
+              <PaginationPrevious className="mr-6 text-gray-700 flex p-3 rounded-md border border-gray-300 bg-white items-center" />
 
               {arr.map((item, index) => {
                 return item === 2 ? (
                   <PaginationEllipsis key={index} />
                 ) : (
-                  <PaginationLink
-                    className={cn(active === item && "bg-[#146EB4] text-white")}
+                  <PaginationBtn
+                    className={cn(
+                      "bg-white text-black",
+                      active === item && "bg-[#146EB4] text-white"
+                    )}
                     key={index}
-                    href=""
                   >
                     {item}
-                  </PaginationLink>
+                  </PaginationBtn>
                 );
               })}
-              <PaginationNext
-                href="#"
-                className="ml-6 text-gray-700 flex p-3 rounded-md border border-gray-300 bg-white items-center"
-              />
+              <PaginationNext className="ml-6 text-gray-700 flex p-3 rounded-md border border-gray-300 bg-white items-center" />
             </PaginationContent>
           </Pagination>
         </div>
