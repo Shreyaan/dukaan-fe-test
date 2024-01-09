@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { Overview } from "../components/Overview";
 
@@ -12,7 +13,15 @@ import {
 } from "@/components/ui/table";
 
 import { icons } from "@/components/icons";
-import { Pages } from "../components/Pages";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationPrevious,
+  PaginationEllipsis,
+  PaginationLink,
+  PaginationNext,
+} from "@/components/ui/pagination";
+import { cn } from "@/lib/utils";
 
 let dummyData: {
   "Order ID": string;
@@ -30,6 +39,7 @@ for (let i = 0; i < 19; i++) {
   });
 }
 
+let arr = [1, 2, 10, 11, 12, 13, 14, 15, 16, 17, 18];
 
 
 function Search() {
@@ -53,6 +63,7 @@ function Search() {
 }
 
 export default function Home() {
+  let active = 11;
   return (
     <div className="w-full px-8 pt-9 ">
       <Overview />
@@ -108,7 +119,34 @@ export default function Home() {
             </TableBody>
           </Table>
         </div>
-        <Pages></Pages>
+        <div className="mt-6">
+          <Pagination>
+            <PaginationContent>
+              <PaginationPrevious
+                className="text-gray-700 flex p-3 rounded-md border border-gray-300 bg-white items-center"
+                href="#"
+              />
+             
+              {arr.map((item, index) => {
+                return item === 2 ? (
+                  <PaginationEllipsis key={index} />
+                ) : (
+                  <PaginationLink
+                    className={cn(active === item && "bg-[#146EB4] text-white")}
+                    key={index}
+                    href="#"
+                  >
+                    {item}
+                  </PaginationLink>
+                );
+              })}
+              <PaginationNext
+                href="#"
+                className="text-gray-700 flex p-3 rounded-md border border-gray-300 bg-white items-center"
+              />
+            </PaginationContent>
+          </Pagination>
+        </div>
       </div>
     </div>
   );
