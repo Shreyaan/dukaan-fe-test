@@ -3,7 +3,7 @@ import { Overview } from "../components/Overview";
 
 
 import { icons } from "@/components/icons";
-import { PaymentsTable } from "./PaymentsTable";
+import { PaymentsTable } from "../components/PaymentsTable";
 
 
 
