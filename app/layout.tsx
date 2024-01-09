@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "flex max-h-screen")}>
+      <body className={cn(inter.className, "flex max-h-screen overflow-hidden ")}>
         <Navbar></Navbar>
         <main className="shrink-0 grow max-h-screen overflow-scroll">
           <Header></Header>

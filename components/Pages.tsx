@@ -10,30 +10,24 @@ import {
 } from "@/components/ui/pagination";
 
 export function Pages() {
-   let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   return (
     <div className="">
       {" "}
-      {/* <Pagination>
+      <Pagination>
         <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href="#" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
+          <PaginationPrevious href="#" />
+          <PaginationEllipsis />
           {arr.map((item, index) => {
             return (
-              <PaginationItem key={index}>
-                <PaginationLink href="#">{item}</PaginationLink>
-              </PaginationItem>
+              <PaginationLink key={index} href="#">
+                {item}
+              </PaginationLink>
             );
           })}
-          <PaginationItem>
-            <PaginationNext href="#" />
-          </PaginationItem>
+          <PaginationNext href="#" />
         </PaginationContent>
-      </Pagination> */}
+      </Pagination>
     </div>
   );
 }
