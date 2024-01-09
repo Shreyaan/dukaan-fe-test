@@ -1,4 +1,5 @@
 "use client";
+import { SetStateAction, useState } from "react";
 import {
   Table,
   TableBody,
@@ -16,6 +17,9 @@ import {
   PaginationNext,
 } from "@/components/ui/pagination";
 import { cn } from "@/lib/utils";
+import { useIsClient } from "usehooks-ts";
+
+import { Skeleton } from "@/components/ui/skeleton";
 
 let dummyData: {
   "Order ID": string;
@@ -24,100 +28,150 @@ let dummyData: {
   "Transaction fees": string;
 }[] = [];
 
-for (let i = 0; i < 19; i++) {
+for (let i = 0; i < 150; i++) {
+  let randomOrderID = "#" + Math.floor(Math.random() * 1000000);
+  let randomOrderDate = new Date(
+    +new Date() - Math.floor(Math.random() * 10000000000)
+  ).toLocaleDateString();
+  let randomOrderAmount = "₹" + (Math.random() * 10000).toFixed(2);
+  let randomTransactionFees = "₹" + (Math.random() * 100).toFixed(2);
+
   dummyData.push({
-    "Order ID": "#281209",
-    "Order date": "7 July, 2023",
-    "Order amount": "₹1,278.23",
-    "Transaction fees": "₹22",
+    "Order ID": randomOrderID,
+    "Order date": randomOrderDate,
+    "Order amount": randomOrderAmount,
+    "Transaction fees": randomTransactionFees,
   });
 }
 
-let arr = [1, 2, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+const ITEMS_PER_PAGE = 15;
 
 export function PaymentsTable() {
-  let active = 11;
-  return (
-    <div className="">
-      <p className="text-gray-800  text-xl font-medium mt-8">
-        Transactions | This Month
-      </p>
-      <div className="max-w-full mt-5 bg-white shadow-[0px_2px_6px_0px_rgba(26,24,30,0.04)] pt-3 pb-6 p-3 rounded-lg">
-        <div className="flex justify-between">
-          <Search></Search>
-          <div className="flex gap-3">
-            {" "}
-            <div className="text-gray-700 flex gap-2 p-3 text-base font-normal leading-6 rounded-md border border-gray-300 bg-white items-center">
-              <p>Sort</p>
-              <div className="w-3 h-3">
-                <icons.downArrow fill="#4D4D4D" height={12} width={12} />
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(dummyData.length / ITEMS_PER_PAGE);
+  const active = currentPage;
+
+  const isClient = useIsClient();
+
+  const handlePageChange = (page: SetStateAction<number>) => {
+    setCurrentPage(page);
+  };
+
+  const displayedData = dummyData.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  if (isClient)
+    return (
+      <div className="">
+        <p className="text-gray-800  text-xl font-medium mt-8">
+          Transactions | This Month
+        </p>
+        <div className="max-w-full mt-5 bg-white shadow-[0px_2px_6px_0px_rgba(26,24,30,0.04)] pt-3 pb-6 p-3 rounded-lg">
+          <div className="flex justify-between">
+            <Search></Search>
+            <div className="flex gap-3">
+              {" "}
+              <div className="text-gray-700 flex gap-2 p-3 text-base font-normal leading-6 rounded-md border border-gray-300 bg-white items-center">
+                <p>Sort</p>
+                <div className="w-3 h-3">
+                  <icons.downArrow fill="#4D4D4D" height={12} width={12} />
+                </div>
+              </div>
+              <div className="text-gray-700 flex p-3 rounded-md border border-gray-300 bg-white items-center">
+                <icons.download />
               </div>
             </div>
-            <div className="text-gray-700 flex p-3 rounded-md border border-gray-300 bg-white items-center">
-              <icons.download />
-            </div>
+          </div>
+          <div className="mt-3 ">
+            <Table>
+              {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
+              <TableHeader className=" bg-[#f2f2f2] items-center  rounded px-3 py-2.5">
+                <TableRow>
+                  <TableCell className="text-left ">Order ID</TableCell>
+                  <TableCell className="flex gap-1 items-center ">
+                    Order date <icons.triangle />{" "}
+                  </TableCell>
+                  <TableCell>Order amount</TableCell>
+                  <TableCell className="flex gap-1 items-center justify-end">
+                    Transaction fees <icons.info />
+                  </TableCell>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {displayedData.map((item, index) => {
+                  return (
+                    <TableRow key={index}>
+                      <TableCell className="text-left text-[#146EB4]">
+                        {item["Order ID"]}
+                      </TableCell>
+                      <TableCell className="text-left">
+                        {item["Order date"]}
+                      </TableCell>
+                      <TableCell>{item["Order amount"]}</TableCell>
+                      <TableCell>{item["Transaction fees"]}</TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </div>
+          <div className="mt-6">
+            <Pagination>
+              <PaginationContent>
+                <PaginationPrevious
+                  className="mr-6 text-gray-700 flex p-3 rounded-md border border-gray-300 bg-white items-center"
+                  onClick={handlePreviousPage}
+                />
+
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                  (item, index) => {
+                    return (
+                      <PaginationBtn
+                        className={cn(
+                          "bg-white text-black",
+                          active === item && "bg-[#146EB4] text-white"
+                        )}
+                        key={index}
+                        onClick={() => handlePageChange(item)}
+                      >
+                        {item}
+                      </PaginationBtn>
+                    );
+                  }
+                )}
+                <PaginationNext
+                  className="ml-6 text-gray-700 flex p-3 rounded-md border border-gray-300 bg-white items-center"
+                  onClick={handleNextPage}
+                />
+              </PaginationContent>
+            </Pagination>
           </div>
         </div>
-        <div className="mt-3 ">
-          <Table>
-            {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
-            <TableHeader className=" bg-[#f2f2f2] items-center  rounded px-3 py-2.5">
-              <TableRow>
-                <TableCell className="text-left ">Order ID</TableCell>
-                <TableCell className="flex gap-1 items-center ">
-                  Order date <icons.triangle />{" "}
-                </TableCell>
-                <TableCell>Order amount</TableCell>
-                <TableCell className="flex gap-1 items-center justify-end">
-                  Transaction fees <icons.info />
-                </TableCell>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {dummyData.map((item, index) => {
-                return (
-                  <TableRow key={index}>
-                    <TableCell className="text-left text-[#146EB4]">
-                      {item["Order ID"]}
-                    </TableCell>
-                    <TableCell className="text-left">
-                      {item["Order date"]}
-                    </TableCell>
-                    <TableCell>{item["Order amount"]}</TableCell>
-                    <TableCell>{item["Transaction fees"]}</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </div>
-        <div className="mt-6">
-          <Pagination>
-            <PaginationContent>
-              <PaginationPrevious className="mr-6 text-gray-700 flex p-3 rounded-md border border-gray-300 bg-white items-center" />
-
-              {arr.map((item, index) => {
-                return item === 2 ? (
-                  <PaginationEllipsis key={index} />
-                ) : (
-                  <PaginationBtn
-                    className={cn(
-                      "bg-white text-black",
-                      active === item && "bg-[#146EB4] text-white"
-                    )}
-                    key={index}
-                  >
-                    {item}
-                  </PaginationBtn>
-                );
-              })}
-              <PaginationNext className="ml-6 text-gray-700 flex p-3 rounded-md border border-gray-300 bg-white items-center" />
-            </PaginationContent>
-          </Pagination>
-        </div>
       </div>
-    </div>
-  );
+    );
+  else
+    return (
+      <>
+        <p className="text-gray-800  text-xl font-medium my-8">
+          Transactions | This Month
+        </p>
+        <Skeleton className="w-full h-[400px] rounded" />
+      </>
+    );
 }
 
 function Search() {
